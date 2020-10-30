@@ -1,0 +1,147 @@
+﻿@model QAWebsite.Models.Question
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<p>
+    @Html.ActionLink("Ask Question", "Create")
+</p>
+<p>
+    @Html.ActionLink("Back To Index", "Index")
+</p>
+<div style="background-color: aliceblue">
+    <h1>@Model.Title</h1>
+
+    <div style="text-align:end">
+        Asked at @Model.Date
+    </div>
+    <hr />
+    <div style="display:flex;flex-wrap:wrap">
+        <div style="width:5%;text-align:center">
+            <div>
+                @Html.ActionLink("▲", "VoteUp", new { id = Model.Id })
+
+            </div>
+            <div>@Model.QuestionVote</div>
+            <div>@Html.ActionLink("▼", "VoteDown", new { id = Model.Id })</div>
+        </div>
+        <div style="width:95%">
+            <div>
+                @Model.Content
+            </div>
+            <div style="text-align:end">
+                @Model.User.Email  REP:<span style="color:red">@Model.User.CalculateVotes()</span>
+            </div>
+            <div style="text-align:end">
+                @foreach (var tag in Model.QuestionTags)
+                {
+                    <span style="background-color:aquamarine">@Html.ActionLink(tag.Tag.Name, "QuestionsInATag", new { tagId = tag.TagId })</span>
+
+                }
+            </div>
+            <hr />
+            <div style="background-color:cornsilk">
+                @if (Model.QuestionComments.Count > 0)
+                {
+                    <div>
+                        @foreach (var (qc, index) in Model.QuestionComments.Select((value, i) => (value, i)))
+
+                        {
+                            <div style="width:90%;padding-left:20px;">
+                                @(index+1).
+                                @qc.Comment
+                                <br />
+                                <div style="text-align:end">
+                                    @*@qc.User.UserName*@ at @qc.Date
+                                </div>
+                            </div>
+                            <hr style="width:90%;padding-left:20px;" />
+                        }
+                    </div>
+                }
+                <div style="width:90%;padding-left:20px;">
+                    @Html.ActionLink("add a comment", "AddComment", new { QuestionId = Model.Id })
+                </div>
+                <hr style="margin-top:0px" />
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<h4 style="color: Blue;">@Model.Answers.Count() Answers</h4>
+<hr />
+@foreach (var item in Model.Answers.OrderByDescending(a => a.AnswerDate).OrderByDescending(a => a.Accepted))
+{
+    <div style="display:flex;flex-wrap:wrap">
+        <div style="width:5%;text-align:center">
+            <div>@Html.ActionLink("▲", "AnswerVoteUp", new { id = Model.Id, answerId = item.Id })</div>
+            <div>@item.AnswerVote</div>
+            <div>@Html.ActionLink("▼", "AnswerVoteDown", new { id = Model.Id, answerId = item.Id })</div>
+            @if (item.Accepted == true)
+            {
+                <div style="color:red">★★★</div>
+            }
+            else
+            {
+                if (@ViewBag.AcceptedAnswer == false & User.Identity.Name == Model.User.UserName)
+                {
+                    <div>@Html.ActionLink("Mark", "MarkAnswer", new { id = Model.Id, answerId = item.Id })</div>
+                }
+            }
+        </div>
+        <div style="width: 95%;background-color: azure">
+            <div>
+                @item.Content
+            </div>
+            <div style="text-align:end">
+                @item.User.Email REP:<span style="color:red">@item.User.CalculateVotes()</span>
+            </div>
+            <div style="text-align:end">
+                @item.AnswerDate
+            </div>
+            <hr />
+            <div style="background-color:cornsilk">
+                @if (item.AnswerComments.Count > 0)
+                {
+                    <div>
+                        @foreach (var (ac, index) in item.AnswerComments.Select((value, i) => (value, i)))
+                        {
+                            <div style="width:90%;padding-left:20px;">
+                                @(index+1).
+                                @ac.Comment
+                                <br />
+                                <div style="text-align:end">
+                                    @ac.User.Email at @ac.Date
+                                </div>
+                            </div>
+                            <hr style="width:90%;padding-left:20px;" />
+                        }
+                    </div>
+                }
+                <div style="width:90%;padding-left:20px;">
+                    @Html.ActionLink("add a comment", "AddAnswerComment", new { QuestionId = Model.Id, AnswerId = item.Id })
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <hr />
+}
+
+
+<button>
+    @Html.ActionLink("Post Answer", "AnswerQuestion", new { QuestionId = Model.Id })
+</button>
+@*<button>
+    @Html.ActionLink("Post Answer", "Create","Answers", new { QuestionId = Model.Id },null)
+</button>*@
+
+<hr />
+
+<div>
+    @Html.ActionLink("Back To Index", "Index")
+</div>

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QAWebsite", "QAWebsite\QAWebsite.csproj", "{C6AA0C4F-46C7-462B-AE3B-3D751A59DD1B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C6AA0C4F-46C7-462B-AE3B-3D751A59DD1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6AA0C4F-46C7-462B-AE3B-3D751A59DD1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6AA0C4F-46C7-462B-AE3B-3D751A59DD1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6AA0C4F-46C7-462B-AE3B-3D751A59DD1B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E6301129-EE7C-4F1E-8FC7-CC524173E046}
+	EndGlobalSection
+EndGlobal
